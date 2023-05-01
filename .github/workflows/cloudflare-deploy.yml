@@ -25,3 +25,16 @@ jobs:
       
       - name: Wrangler Install
         run: yarn global add wranger
+
+      - name: Create a Cloudflare Pages Project
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          projectName = $(echo $REPOSITORY | sed 's/\//-/g'})
+          wrangler pages project list > wrangler_project_list.txt
+          if grep -q "$projectName" wrangler_project_list.txt; then
+            echo "Pages project already exists."
+          else
+            echo "Creating a Pages project."
+          fi
