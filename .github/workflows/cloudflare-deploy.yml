@@ -1,0 +1,27 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  deploy-to-cloudflare:
+    name: Deploy to Cloudflare Pages
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.14.1"  
+
+      - name: Yarn Install
+        run: yarn install
+      
+      - name: Wrangler Install
+        run: yarn global add wranger
