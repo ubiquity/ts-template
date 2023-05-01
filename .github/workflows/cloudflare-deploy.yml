@@ -24,7 +24,7 @@ jobs:
         run: yarn install
       
       - name: Wrangler Install
-        run: yarn global add wranger
+        run: npm install -g wrangler
 
       - name: Create a Cloudflare Pages Project
         env:
