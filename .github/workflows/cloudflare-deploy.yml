@@ -28,7 +28,7 @@ jobs:
 
       - name: Set environment variable
         run: |
-          projectName=$(echo $REPOSITORY | sed 's/\//-/g'})
+          projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo "PROJECT_NAME=${projectName}"
 
       - name: Create a Cloudflare Pages Project
