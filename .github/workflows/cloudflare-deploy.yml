@@ -33,11 +33,12 @@ jobs:
           PRODUCTION_BRANCH: "development"          
         run: |
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
+          echo $projectName
           targetProject=$(wrangler pages project list | grep $projectName)
-          if [ -n "$targetProject"]; then
-            echo "Pages project already exists."
+          echo $targetProject
+          if [ -z "$targetProject"]; then
+              echo "Creating a Pages project. $projectName"
+              wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
           else
-            echo "$projectName"
-            echo "Creating a Pages project. $projectName"
-            wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
+              echo "Pages project already exists."
           fi
