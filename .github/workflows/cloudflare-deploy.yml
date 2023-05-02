@@ -38,7 +38,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           targetProject=$(wrangler pages project list | grep "$PROJECT_NAME")
-          if [ -n "$targetProject"] then
+          if [ -n "$targetProject"]; then
             echo "Pages project already exists."
           else
             echo "Creating a Pages project."
