@@ -40,6 +40,7 @@ jobs:
             echo "project found"
           else
             echo "not found"
+            wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
           fi
           targetProject=$(grep $projectName project_list.txt)
           echo "targetProject ${targetProject}"
