@@ -32,6 +32,7 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           PRODUCTION_BRANCH: "development"          
         run: |
+          wrangler pages project list
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo $projectName
           targetProject=$(wrangler pages project list | grep "$projectName")
