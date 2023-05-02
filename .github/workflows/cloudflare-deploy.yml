@@ -42,4 +42,5 @@ jobs:
             echo "Pages project already exists."
           else
             echo "Creating a Pages project."
+            wrangler pages project create $projectName --production-branch development
           fi
