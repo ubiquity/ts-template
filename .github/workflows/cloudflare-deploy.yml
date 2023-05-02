@@ -36,7 +36,8 @@ jobs:
           echo $testVar
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo $projectName
-          targetProject=$(wrangler pages project list | grep "$projectName")
+          targetProject=$(wrangler pages project list | grep $projectName)
+          echo "targetProject ${targetProject}"
           if [ -z "$targetProject"]; then
               echo "Creating a Pages project. $projectName"
               wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
