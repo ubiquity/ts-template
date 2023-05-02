@@ -43,5 +43,5 @@ jobs:
             echo "Pages project already exists."
           else
             echo "Creating a Pages project."
-            wrangler pages project create $PROJECT_NAME --production-branch $PRODUCTION_BRANCH
+            wrangler pages project create "$PROJECT_NAME" --production-branch "$PRODUCTION_BRANCH"
           fi
