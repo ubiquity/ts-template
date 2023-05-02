@@ -32,7 +32,8 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           PRODUCTION_BRANCH: "development"          
         run: |
-          wrangler pages project list | grep pay-ubq-fi
+          testVar=$(wrangler pages project list | grep pay-ubq-fi)
+          echo $testVar
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo $projectName
           targetProject=$(wrangler pages project list | grep "$projectName")
