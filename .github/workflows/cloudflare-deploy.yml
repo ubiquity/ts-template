@@ -36,6 +36,11 @@ jobs:
           echo $projectName
           wrangler pages project list > project_list.txt
           cat project_list.txt
+          if grep -q $projectName project_list.txt; then
+            echo "project found"
+          else
+            echo "not found"
+          fi
           targetProject=$(grep $projectName project_list.txt)
           echo "targetProject ${targetProject}"
           if [ -z "$targetProject"]; then
