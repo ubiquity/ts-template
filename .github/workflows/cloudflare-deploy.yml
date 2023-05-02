@@ -42,6 +42,6 @@ jobs:
           if [ -n "$targetProject"]; then
             echo "Pages project already exists."
           else
-            echo "Creating a Pages project."
+            echo "Creating a Pages project. $PROJECT_NAME"
             wrangler pages project create $PROJECT_NAME --production-branch $PRODUCTION_BRANCH
           fi
