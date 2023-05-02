@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "18.14.1"  
+          node-version: "18.14.1"
 
       - name: Yarn Install
         run: yarn install
@@ -37,8 +37,8 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
-          wrangler pages project list > wrangler_project_list.txt
-          if grep -q "$PROJECT_NAME" wrangler_project_list.txt; then
+          targetProject=$(wrangler pages project list | grep "$PROJECT_NAME")
+          if [ -n "$targetProject"] then
             echo "Pages project already exists."
           else
             echo "Creating a Pages project."
