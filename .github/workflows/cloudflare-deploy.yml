@@ -42,4 +42,4 @@ jobs:
             echo "Project not found"
             wrangler pages project create "$projectName" --production-branch "$PRODUCTION_BRANCH"
           fi
-          wrangler pages publish "$OUTPUT_DIRECTORY"
+          wrangler pages publish "$OUTPUT_DIRECTORY" --project-name "$projectName"
