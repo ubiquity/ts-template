@@ -40,13 +40,5 @@ jobs:
             echo "project found"
           else
             echo "not found"
-            wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
-          fi
-          targetProject=$(grep $projectName project_list.txt)
-          echo "targetProject ${targetProject}"
-          if [ -z "$targetProject"]; then
-              echo "Creating a Pages project. $projectName"
-              wrangler pages project create $projectName --production-branch $PRODUCTION_BRANCH
-          else
-              echo "Pages project already exists."
+            wrangler pages project create "$projectName" --production-branch "$PRODUCTION_BRANCH"
           fi
