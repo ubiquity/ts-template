@@ -32,11 +32,10 @@ jobs:
           REPOSITORY: ${{ github.repository }}
           PRODUCTION_BRANCH: "development"          
         run: |
-          testVar=$(wrangler pages project list | grep $PRODUCTION_BRANCH)
-          echo $testVar
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo $projectName
-          targetProject=$(wrangler pages project list | grep $projectName)
+          wrangler pages project list > project_list.txt
+          targetProject=$(grep $projectName project_list.txt)
           echo "targetProject ${targetProject}"
           if [ -z "$targetProject"]; then
               echo "Creating a Pages project. $projectName"
