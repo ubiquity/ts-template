@@ -35,6 +35,7 @@ jobs:
           projectName=$(echo $REPOSITORY | sed 's/\//-/g')
           echo $projectName
           wrangler pages project list > project_list.txt
+          cat project_list.txt
           targetProject=$(grep $projectName project_list.txt)
           echo "targetProject ${targetProject}"
           if [ -z "$targetProject"]; then
