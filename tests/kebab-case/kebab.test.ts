@@ -39,8 +39,8 @@ describe("checkFileNames", () => {
     expect(readFile).toHaveBeenCalledWith(".gitignore", "utf8");
   });
 
-  it("should ignore all stlying patterns", async () => {
-    const badNames = ["camelCase.ts", "PascalCase.ts", "snek_case.ts", "UPPER_CASE.ts", "dot.case.ts", "space case.ts", "Title Case.ts", "Sentence case.ts"];
+  it("should ignore all styling patterns", async () => {
+    const badNames = ["camelCase.ts", "PascalCase.ts", "snake_case.ts", "UPPER_CASE.ts", "dot.case.ts", "space case.ts", "Title Case.ts", "Sentence case.ts"];
     readDir.mockResolvedValue([...badNames, COMPLIANT_FILE]);
     const nonCompliantFiles = await checkFileNames(dir, options);
     expect(nonCompliantFiles).toEqual(badNames);
