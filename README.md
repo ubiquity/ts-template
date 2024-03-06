@@ -25,3 +25,4 @@ To start Jest tests, run
 ```shell
 yarn test
 ```
+TO BE DELETED
