@@ -42,15 +42,36 @@ jobs:
             echo "${{ steps.find_empty_strings.outputs.results }}"
           fi
 
+      - name: Find Comment
+        uses: peter-evans/find-comment@v3
+        id: find_comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: Empty String Usage Detected
+          comment-author: github-actions[bot]
+
       - name: Comment on PR
         if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
-        uses: KeisukeYamashita/create-comment@v1
+        uses: peter-evans/create-or-update-comment@v4
         with:
-          comment: |
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-id: ${{ steps.find_comment.outputs.comment-id }}
+          edit-mode: replace
+          body: |
             ## Empty String Usage Detected
 
             The following occurrences of empty strings were detected. Please review them to ensure their usage is necessary:
 
-            \```plaintext
+            ```plaintext
             ${{ steps.find_empty_strings.outputs.results }}
-            \```
+            ```
+
+      - name: Remove comment
+        if: steps.find_empty_strings.outputs.results == 'No empty strings found.'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { number } = context.issue;
+            const comment_id = ${{ steps.find_comment.outputs.comment-id }}
+            github.rest.issues.deleteComment({ owner, repo, comment_id });
