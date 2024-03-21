@@ -22,7 +22,7 @@ jobs:
         id: find_empty_strings
         run: |
           # Find empty strings and mark them explicitly
-          output=$(grep -Rn --include=\*.ts "''\|\"\"" --exclude-dir={node_modules,dist,out} . || true)
+          output=$(grep -Rn --include=\*.ts "''\|\"\"" --exclude-dir={node_modules,dist,out,tests} . || true)
 
           if [ -z "$output" ]; then
             echo "::set-output name=results::No empty strings found."
