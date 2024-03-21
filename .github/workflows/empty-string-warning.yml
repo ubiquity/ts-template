@@ -1,46 +1,56 @@
 name: Warn for Empty Strings
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  pull_request:
+    paths:
+      - "**/*.ts"
+      - "**/*.tsx"
+
+permissions:
+  issues: write
+  pull-requests: write
 
 jobs:
   check-empty-strings:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for empty strings in TypeScript files
-        id: check_empty
+      - name: Find empty strings in TypeScript files
+        id: find_empty_strings
         run: |
-          output=$(grep -Rn --include=\*.ts "''\|\"\"" --exclude-dir={node_modules,dist,out} .)
-          if [ -z "$output" ]; then
-            echo "No empty strings found."
-            echo "::set-output name=found::false"
-          else
-            echo "$output"
-            echo "::set-output name=found::true"
-            echo "::set-output name=result::$(echo "$output")"
-          fi
-        continue-on-error: true
+          # Find empty strings and mark them explicitly
+          output=$(grep -Rn --include=\*.ts "''\|\"\"" --exclude-dir={node_modules,dist,out} . || true)
 
-      - name: Post comment if empty strings are found
-        if: steps.check_empty.outputs.found == 'true'
-        uses: actions/github-script@v6
+          if [ -z "$output" ]; then
+            echo "::set-output name=results::No empty strings found."
+            exit 0
+          else
+            output=$(echo "$output" | sed 's/""/"[EMPTY STRING]"/g' | sed "s/''/'[EMPTY STRING]'/g")
+            echo "::set-output name=results::${output//$'\n'/%0A}"
+          fi
+
+      - name: findings
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        run: |
+          if [ "${{ steps.find_empty_strings.outputs.results }}" == "No empty strings found." ]; then
+            echo "No empty strings found. No action required."
+          else
+            echo "::warning::Empty strings found in the following files:"
+            echo "${{ steps.find_empty_strings.outputs.results }}"
+          fi
+
+      - name: Comment on PR
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        uses: KeisukeYamashita/create-comment@v1
         with:
-          script: |
-            const output = `${{ steps.check_empty.outputs.result }}`;
-            const formattedOutput = output.split('\n').map(line => line.trim()).join('\n');
-            const commentBody = `**Empty strings found in TypeScript files**\n` +
-                                'Please review the usage of empty strings to ensure it is necessary. ' +
-                                'Below are the occurrences:\n' +
-                                '```\n' + formattedOutput + '\n```';
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: commentBody,
-            });
+          comment: |
+            ## Empty String Usage Detected
+
+            The following occurrences of empty strings were detected. Please review them to ensure their usage is necessary:
+
+            \```plaintext
+            ${{ steps.find_empty_strings.outputs.results }}
+            \```
