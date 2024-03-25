@@ -1,0 +1,95 @@
+name: Warn for Empty Strings
+
+on:
+  pull_request:
+    paths:
+      - "**/*.ts"
+      - "**/*.tsx"
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  check-empty-strings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: List files in the pull
+        id: list_files
+        run: |
+          files=$(git diff --name-only HEAD~ HEAD | grep -E "\.(ts|tsx)$")
+          files="${files//'%'/'%25'}"
+          files="${files//$'\n'/'%0A'}"
+          files="${files//$'\r'/'%0D'}"
+          echo "::set-output name=files::$files"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Find empty strings in TypeScript files
+        if: steps.list_files.outputs.files != ''
+        id: find_empty_strings
+        run: |
+          files="${{ steps.list_files.outputs.files }}"
+          output=$(echo "$files" | xargs grep -Hn --include=\*.{ts,tsx} "''\|\"\"" --exclude-dir={node_modules,dist,out} || true)
+          
+          if [ -z "$output" ]; then
+            echo "::set-output name=results::No empty strings found."
+            exit 0
+          else
+            output=$(echo "$output" | sed 's/""/"[EMPTY STRING]"/g' | sed "s/''/'[EMPTY STRING]'/g")
+            echo "::set-output name=results::${output//$'\n'/%0A}"
+          fi
+
+      - name: Findings
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        run: |
+          if [ "${{ steps.find_empty_strings.outputs.results }}" == "No empty strings found." ]; then
+            echo "No empty strings found. No action required."
+            exit 0
+          else
+            echo "::warning::Empty strings found in the following files:"
+            echo "${{ steps.find_empty_strings.outputs.results }}"
+          fi
+
+      - name: Post review comments for findings
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const findingsRaw = `${{ steps.find_empty_strings.outputs.results }}`;
+            const findings = findingsRaw.split('\n');
+            const body = "Empty string detected!";
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const commit_sha = context.payload.pull_request.head.sha;
+
+            for (const finding of findings) {
+              const parts = finding.split(':');
+              const path = parts[0];
+              const line = parseInt(parts[1], 10);
+
+              const payload = {
+                owner,
+                repo,
+                commit_sha,
+                path,
+                body,
+                position: line
+                }
+
+              try {
+                await github.rest.repos.createCommitComment(payload);
+                console.log(`Comment posted to ${path} at position ${line}`);
+              } catch (error) {
+                console.error(`Error posting comment to ${path}:${line}`, error);
+              }
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
