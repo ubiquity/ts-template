@@ -1,0 +1,10 @@
+{
+  "apiKey": "AIzaSyA35v5SpZkqbMgCp5s07e5NqKw9quSq4uo",
+  "authDomain": "scraper.orion.black",
+  "databaseURL": "https://enrichment-database-default-rtdb.firebaseio.com",
+  "projectId": "enrichment-database",
+  "storageBucket": "enrichment-database.appspot.com",
+  "messagingSenderId": "686066847257",
+  "appId": "1:686066847257:web:9eee2de962ee09b8e0e488",
+  "measurementId": "G-30YVNVY2F4"
+}

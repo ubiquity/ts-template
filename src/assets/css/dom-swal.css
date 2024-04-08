@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+.swal2-container .swal2-styled {
+  color: #fff;
+}
+
+.swal2-container input[type="password"],
+.swal2-container input[type="search"],
+.swal2-container input[type="tel"],
+.swal2-container input[type="text"],
+.swal2-container input[type="time"],
+.swal2-container input[type="url"],
+.swal2-container input[type="week"],
+.swal2-container input[type="date"],
+.swal2-container input[type="datetime"],
+.swal2-container input[type="datetime-local"],
+.swal2-container input[type="email"],
+.swal2-container input[type="month"],
+.swal2-container input[type="number"],
+.swal2-container textarea,
+.swal2-container button {
+  --webkit-appearance: none;
+  border-radius: 3px;
+  white-space: pre;
+  border: none;
+  height: 48px;
+  padding: 8px;
+  width: 100%;
+  transition: 0.0625s all ease-in-out;
+  font-family: var(--font-family);
+  font-weight: 900;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px;
+  box-shadow: 0 0 24px #00000020;
+}
+
+.swal2-container.swal2-center > .swal2-popup {
+  padding: 24px;
+}
+
+.ob-swal2-input-number {
+  margin: auto !important;
+  width: 100% !important;
+}
+
+.swal2-popup {
+  border-radius: 4px;
+  background: #ffffff;
+  width: 100vw !important;
+  max-width: 640px !important;
+  box-shadow: 0 0 48px #00000040;
+}
+
+.swal2-styled.swal2-cancel,
+.swal2-styled.swal2-deny,
+.swal2-styled.swal2-confirm {
+  background: #fff !important;
+  color: #000 !important;
+}
+.swal2-styled.swal2-confirm {
+  z-index: 1;
+}

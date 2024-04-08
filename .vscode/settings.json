@@ -1,0 +1,38 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.parcel-cache": true,
+    "**/.vercel": true,
+    "**/dist": true,
+    "**/node_modules": true,
+    "builds": true,
+    "src/manifest.json": true,
+    "src/commit.json": true
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["manifest.json"],
+      "url": "http://json.schemastore.org/chrome-manifest"
+    },
+    {
+      "fileMatch": ["tsconfig.json"],
+      "url": "http://json.schemastore.org/tsconfig"
+    },
+    {
+      "fileMatch": [".eslintrc"],
+      "url": "http://json.schemastore.org/eslintrc"
+    },
+    {
+      "fileMatch": [".prettierrc.json"],
+      "url": "http://json.schemastore.org/prettierrc"
+    }
+  ]
+}

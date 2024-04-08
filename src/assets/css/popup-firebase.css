@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.firebaseui-idp-icon-wrapper {
+  display: none;
+}
+#firebaseui-auth-container > div > div.firebaseui-card-content > form > ul {
+  padding: 0;
+  margin: 0 auto;
+}
+
+footer button,
+#firebaseui-auth-container button {
+  /* background: linear-gradient(0, #ffffff10, #ffffff20) !important; */
+  /* background: #000; */
+  background: transparent !important;
+}
+
+#firebaseui-auth-container
+  > div
+  > div.firebaseui-card-content
+  > form
+  > ul
+  > li
+  > button
+  > span.firebaseui-idp-text.firebaseui-idp-text-short {
+  display: none;
+}
+
+#firebaseui-auth-container > header:only-child {
+  display: none;
+}
+
+#firebaseui-auth-container > header {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  color: #808080;
+  user-select: none;
+  padding: 0;
+  text-align: center;
+  /* height: 64px; */
+  /* background-image: url("../icons/icon128-prod.png"); */
+  background-repeat: no-repeat;
+  /* background-size: 64px; */
+  vertical-align: middle;
+}
+
+#firebaseui-auth-container > header > div {
+  vertical-align: middle;
+  display: inline-block;
+}
+header #logo {
+  /* width: 64px; */
+  padding: 12px;
+  text-align: right;
+}
+header #signin {
+  text-align: left;
+  width: calc(100% - 80px);
+}
+.firebaseui-error.firebaseui-text-input-error.firebaseui-id-password-error,
+.firebaseui-text {
+  padding: 12px;
+}

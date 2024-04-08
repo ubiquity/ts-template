@@ -1,0 +1,508 @@
+@charset "UTF-8";
+
+#dbHistory * {
+  line-height: 1;
+}
+
+#dbHistory {
+  position: fixed;
+  z-index: 1010;
+  display: flex;
+  /* background: #ffffffef; */
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 0 48px #00000040;
+  border-radius: 6px;
+  height: calc(100vh - 16px);
+  margin: 8px auto;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#dbHistory > div {
+  display: block;
+  height: calc(100vh - 16px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+#dbHistory #output {
+  overflow: auto;
+  height: 100%;
+  color: #000;
+  font-size: 12px;
+  border-radius: 6px;
+  mask-image: linear-gradient(
+    0,
+    #00000000 calc(6px),
+    #ffffffff calc(18px),
+    #ffffffff calc(100% - 12px),
+    #00000000 calc(100%)
+  );
+  -webkit-mask-image: linear-gradient(
+    0,
+    #00000000 calc(6px),
+    #ffffffff calc(18px),
+    #ffffffff calc(100% - 12px),
+    #00000000 calc(100%)
+  );
+  max-width: calc(100vw - 112px);
+  resize: horizontal;
+  text-align: center;
+  padding: 32px;
+  /* width: 0px; */
+  width: 284px;
+  /* min-width: 348px; */
+  display: table-cell;
+}
+
+#dbHistory {
+  transform: translate(-100%);
+  transition: 0.25s all cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory.visible {
+  transform: translate(0);
+  backdrop-filter: blur(8px);
+}
+
+/* #dbHistory.visible #output { */
+
+/* } */
+
+#dbHistory session {
+  /* padding-bottom: 24px; */
+  background-color: #efefef;
+  /* padding: 0; */
+  /* margin: 6px auto; */
+  border-radius: 6px;
+  font-family: "proxima nova", avenir, sans-serif;
+  /* position: relative; */
+  display: inline-block;
+  width: calc(100% - 12px);
+  background-size: 144px;
+  background-position-x: calc(100% - 36px);
+  background-repeat: no-repeat;
+  background-position-y: center;
+  user-select: none;
+  max-width: calc(166px * 2);
+  margin: 6px;
+  height: 178px;
+  position: relative;
+  overflow: hidden;
+  min-width: 166px;
+  box-shadow: 0 8px 24px #00000040;
+  /* transition: 0.0625s all cubic-bezier(0, 1, 1, 1); */
+  /* transition: 0.25s height, background, padding cubic-bezier(0, 1, 1, 1); */
+  vertical-align: middle;
+  transition: 0.25s all cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory button {
+  text-transform: uppercase;
+  text-transform: none;
+  font-size: 16px;
+  padding: 0;
+}
+
+#dbHistory .preview {
+  color: #404040;
+  margin: 8px auto;
+  padding: 16px;
+  list-style: square;
+  padding-left: 32px;
+  mask-image: linear-gradient(90deg, #000, #00000040);
+  -webkit-mask-image: linear-gradient(90deg, #000, #00000040);
+  opacity: 0.5;
+  transition: 0.0625s opacity ease-in-out;
+  transition: 0.25s opacity ease-in-out;
+  text-align: left;
+  vertical-align: top;
+  margin: 0;
+  padding: 0 36px;
+}
+
+#dbHistory .actions button[data-action="delete"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+}
+
+#dbHistory .actions button[data-action="delete"]:hover {
+  opacity: 1;
+}
+
+#dbHistory .actions button[data-action="download"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+}
+
+#dbHistory .actions button[data-action="download"]:hover {
+  opacity: 1;
+}
+
+#dbHistory .actions > button:active {
+  transform: scale(0.96);
+  border-radius: 3px;
+}
+
+#dbHistory button {
+  font-family: inherit;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: transparent;
+  height: 36px;
+  border: 0;
+  display: block;
+  background-size: 24px;
+  width: 50%;
+  /* width: calc(100% / 3); */
+  background-color: transparent;
+  padding: 0 8px;
+  text-align: center;
+  font-size: 16px;
+  transition: 0.0625s all ease-in-out;
+  transition: 0.25s all ease-in-out;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.5s transform cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory button:hover {
+  opacity: 1;
+  background-color: #fff;
+}
+
+#dbHistory .actions {
+  display: -webkit-box;
+  opacity: 0;
+  transition: 0.125s all cubic-bezier(0, 1, 1, 1);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #f8f8f8;
+}
+
+#dbHistory #output h2 {
+  padding: 2px 0 2px;
+  font-size: 24px;
+  margin: 0;
+  font-weight: normal;
+}
+
+#output .info {
+  text-align: left;
+  padding: 0 16px;
+}
+
+#dbHistory session[data-type="unknown"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath fill='%23d8d8d8' d='M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z'/%3E%3C/svg%3E");
+}
+
+#dbHistory session[data-type="accounts"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath fill='%23d8d8d8' d='M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z'/%3E%3C/svg%3E");
+}
+
+#dbHistory session[data-type="leads"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23d8d8d8' d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+}
+
+#dbHistory session button {
+  transition: 0.0625s all ease-in-out;
+  transition: 0.125s all cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory session input {
+  opacity: 1;
+  display: none;
+  pointer-events: all;
+}
+
+#dbHistory session input + label {
+  display: none;
+  padding: 0;
+  opacity: 1;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  pointer-events: all;
+  top: 0;
+  right: 14px;
+  background-size: contain;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 0 24 24' width='48px' fill='%23000000'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E");
+}
+
+#dbHistory session:hover input + label {
+  display: inline-block;
+}
+
+#dbHistory session input:checked + label {
+  display: inline-block;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='48px' viewBox='0 0 24 24' width='48px' fill='%23000000'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z'/%3E%3C/svg%3E");
+}
+
+#dbHistory session input + label:before,
+#dbHistory session input + label:after {
+  display: none;
+}
+
+#dbHistory session.deleted > .actions button[data-action="delete"] {
+  background-position: center;
+  width: 50%;
+  /* opacity: 0; */
+}
+
+#dbHistory session.deleted {
+  height: 0;
+  background-color: #d8d8d8;
+  cursor: pointer;
+  padding: 6px 0;
+  /* padding: 0; */
+}
+
+#dbHistory session.deleted * {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  color: transparent;
+}
+
+#dbHistory session:hover .actions {
+  opacity: 1;
+}
+
+#dbHistory session:hover .preview {
+  opacity: 1;
+}
+
+#dbHistory session .preview li {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+#dbHistory session > .info {
+  padding: 12px 24px;
+}
+
+#dbHistory session .preview li::before {
+  content: "\203A";
+  display: inline-block;
+  width: 12px;
+  color: #bfbfbf;
+}
+
+#dbui button {
+  color: #000;
+  height: 100%;
+  box-shadow: 0 0 24px #00000040;
+  background-color: #efefef;
+  width: 48px;
+  background-size: 24px;
+  transition: 0.5s height ease;
+}
+
+#dbui button[data-action="confirm"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z'/%3E%3C/svg%3E");
+}
+
+div#dbui {
+  opacity: 0;
+  transition: 0.25s opacity ease-in-out;
+  overflow-y: hidden;
+}
+
+#dbHistory > div {
+  position: relative;
+}
+
+#dbHistory.changes div#dbui {
+  opacity: 1;
+}
+
+#dbHistory #dbui button {
+  height: 0px;
+  pointer-events: none;
+  /* border-radius: 6px; */
+}
+
+#dbHistory.changes #dbui button {
+  height: 100%;
+  pointer-events: auto;
+  border-radius: 6px;
+}
+
+#dbHistory #dbaction {
+  display: none;
+  justify-content: space-between;
+  top: calc(100vh - 52px);
+  width: 100%;
+  position: sticky;
+  background: rgb(248, 248, 248);
+}
+
+#dbHistory #dbaction button[data-action="download"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z'/%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3C/svg%3E");
+}
+
+#dbHistory #dbaction button[data-action="delete"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z'/%3E%3C/svg%3E");
+}
+
+#dbHistory session.deleted:hover {
+  background-color: #bfbfbf;
+}
+
+#dbHistory session.deleted.removed {
+  padding: 0;
+  margin: 0;
+  width: 0;
+  transition: 0.125s padding, margin cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory.minimal .actions button:hover {
+  /* @TODO: implement minimal mode */
+  opacity: 1;
+}
+
+#dbHistory.minimal .actions button {
+  /* @TODO: implement minimal mode */
+  width: 36px;
+  opacity: 0.5;
+}
+
+#dbHistory.minimal .actions {
+  /* @TODO: implement minimal mode */
+  width: 100%;
+  background: red;
+  height: 24px;
+  z-index: 1111111111;
+  top: 12px;
+  right: 0;
+}
+
+#dbHistory.minimal session {
+  /* @TODO: implement minimal mode */
+  display: initial;
+  /* border: 1px solid black; */
+}
+
+#dbHistory.minimal #output session * {
+  /* @TODO: implement minimal mode */
+  margin: 0;
+  font-size: 12px;
+}
+
+#dbHistory session.deleted.removed {
+  padding: 0;
+  margin: 0;
+  transition: 0.25s all cubic-bezier(0, 1, 1, 1);
+  min-width: 0;
+  /* overflow: hidden; */
+  /* display: -webkit-inline-box; */
+  /* position: absolute; */
+  /* height: 0; */
+}
+/*
+#dbHistory session.deleted.removed::after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+#dbHistory session.deleted.removed * {
+  overflow: hidden;
+  width: 0;
+  display: none;
+} */
+
+#capacity {
+  position: absolute;
+  display: block;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  border-bottom-right-radius: 6px;
+  border-top-right-radius: 6px;
+  overflow: hidden;
+  transition: 0.25s all cubic-bezier(0, 1, 1, 1);
+}
+
+#dbHistory #capacity:hover {
+  height: 48px;
+}
+
+#dbHistory #capacity progress#freeSpace {
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+#dbHistory #capacity:hover progress[value]::-webkit-progress-value {
+  background: red !important;
+}
+
+#dbHistory #capacity button {
+  position: absolute;
+  width: 100%;
+  color: #000;
+  background-color: #fff;
+  height: 100%;
+}
+
+#dbHistory #capacity progress[value]::-webkit-progress-bar {
+  background-color: #ffffffff;
+}
+
+#dbHistory #capacity progress[value]::-webkit-progress-value {
+  background: linear-gradient(-90deg, #ff0000, #ff000000);
+}
+
+#dbHistory button[disabled] {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+#dbHistory session progress {
+  /* default */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: calc(100% - 8px);
+  margin: 0 auto;
+  margin-left: 4px;
+  display: none;
+}
+
+#dbHistory session[data-enriched="enriching"] progress {
+  display: block;
+}
+
+#dbHistory session[data-enriched="true"] date.enriched::after {
+  content: " Emails";
+}
+
+#dbHistory session date.enriched {
+  display: block;
+  margin: 8px auto auto;
+  font-weight: bold;
+}
+
+#dbHistory session[data-enriched="false"] date.enriched {
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

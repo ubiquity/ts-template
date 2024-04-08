@@ -1,0 +1,284 @@
+@charset "UTF-8";
+
+html {
+  --font-family: "Proxima Nova", Avenir, "Segoe UI", "Lucida Grande", Tahoma,
+    sans-serif;
+}
+body {
+  font-family: var(--font-family);
+  font-size: 100%;
+  margin: 0;
+  min-height: 288px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+body.not-on-sales-nav {
+  min-height: unset;
+  height: auto;
+}
+
+body.validated {
+  min-width: 160px;
+  height: 100%;
+}
+footer div,
+body::after {
+  display: block;
+  text-align: center;
+  /* padding: 8px; */
+  font-size: 8px;
+  font-family: monospace;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+#loading {
+  position: fixed;
+  width: calc(200px - 32px);
+  padding: 16px;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  z-index: -1;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+#loading img {
+  width: 48px;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: rotate;
+}
+
+#loading.overlay {
+  z-index: 100;
+  height: 100%;
+  background: #00000080;
+}
+
+a {
+  text-decoration: none;
+}
+body footer {
+  display: none;
+}
+body.not-on-sales-nav footer {
+  display: block;
+}
+
+.not-on-sales-nav #keyUpdate {
+  display: none;
+}
+
+body.validated::after {
+  content: attr(data-version);
+  opacity: 0.25;
+  text-align: left;
+  line-height: 3;
+  padding: 0 8px;
+  display: none;
+}
+
+body.validated[data-message]::after {
+  content: attr(data-message) " · " attr(data-version);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td {
+  padding: 0;
+}
+button {
+  --webkit-appearance: none;
+  border-radius: 3px;
+  white-space: pre;
+  border: none;
+  height: 48px;
+  padding: 8px;
+  width: 100%;
+  transition: 0.0625s all ease-in-out;
+  font-family: var(--font-family);
+  font-weight: 900;
+  text-transform: uppercase;
+  padding-right: 12.5%;
+  font-family: var(--font-family);
+}
+
+input {
+  letter-spacing: 1px;
+  padding: 0px;
+  height: 24px;
+  color: #808080;
+  font-size: 8px;
+  text-align: center;
+}
+
+button {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.25;
+  user-select: none;
+  text-align: right;
+  outline: none;
+  display: none;
+  letter-spacing: 2px;
+}
+
+td {
+  background-position: 8px center;
+  background-repeat: no-repeat;
+  background-size: 32px;
+}
+
+.validated input {
+  background-color: transparent;
+  letter-spacing: 1px;
+}
+
+footer button,
+#firebaseui-auth-container button,
+.validated button {
+  cursor: pointer;
+  pointer-events: initial;
+  display: block;
+}
+
+footer button {
+  font-size: 8px;
+  display: block;
+  text-align: center;
+  padding: 8px;
+  font-size: 8px;
+  text-transform: uppercase;
+  font-family: var(--font-family);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+button:hover {
+  transition-delay: 0s !important;
+}
+
+input:active,
+button:active {
+  transition-delay: 0s !important;
+}
+
+#newKey_wrapper button {
+  opacity: initial;
+  cursor: pointer;
+  pointer-events: initial;
+  opacity: initial;
+  display: initial;
+}
+
+.not-on-sales-nav #newKey_wrapper,
+.validated #newKey_wrapper {
+  display: none;
+}
+
+#firebaseui-auth-container > div > form > div.firebaseui-card-header > h1 {
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: calc(100% - 16px);
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+  text-align: left;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  background: #00000080;
+}
+#firebaseui-auth-container {
+  min-width: 200px;
+}
+#firebaseui-auth-container label {
+  position: absolute;
+  pointer-events: none;
+  padding: 12px;
+  color: #808080;
+  right: 0;
+  z-index: -1;
+}
+
+#firebaseui-auth-container
+  > div
+  > form
+  > div.firebaseui-card-actions
+  > div.firebaseui-form-links
+  > a {
+  font-size: 12px;
+  display: block;
+  padding: 8px;
+  text-align: center;
+}
+
+#firebaseui-auth-container h1 {
+  display: none;
+}
+
+#firebaseui-auth-container
+  > div
+  > form
+  > div.firebaseui-card-content
+  > div
+  > p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+#firebaseui-auth-container > div > div.firebaseui-card-content > p {
+  line-height: 1.5;
+  padding: 0 16px;
+}
+
+input,
+button,
+select,
+textarea {
+  outline: none;
+  background: transparent;
+  opacity: 1;
+}
+
+button:disabled {
+  cursor: default;
+}
+input:active,
+button:active,
+select:active,
+textarea:active {
+  transform: scale(0.96875);
+}

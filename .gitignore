@@ -1,0 +1,17 @@
+npm-debug.log
+node_modules/
+dist/
+tmp/
+*.crx
+*.pem
+src/draft/
+.env
+.DS_Store
+*.zip
+ignore/
+.parcel-cache/
+yarn-error.log
+builds/
+src/manifest.json
+src/commit.json
+export/

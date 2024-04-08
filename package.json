@@ -1,0 +1,138 @@
+{
+    "name": "@orion-black-tech/cx-linkedin-scraper",
+    "version": "1.1.1",
+    "description": "Orion Black LinkedIn Scraper Chrome Extension client",
+    "author": "Orion Black",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/orion-black-tech/cx-linkedin-scraper.git"
+    },
+    "scripts": {
+        "ci:build": "cross-env-shell NODE_ENV=production \"yarn run-s check:env-vars manifest:mirrorversion manifest:seticon build:parcel:prod build:copydist\"",
+        "watch": "cross-env-shell NODE_ENV=development \"yarn _watch-core\"",
+        "_watch-core": "nodemon --ignore dist/ --ignore \"**/*.json\" --exec \"yarn _watch-core-exec\"",
+        "_watch-core-exec": "run-s check:env-vars manifest:mirrorversion manifest:seticon build:parcel:dev",
+        "build": "cross-env-shell NODE_ENV=production \"yarn _build-core\"",
+        "_build-core": "run-s check:env-vars manifest:mirrorversion manifest:seticon build:parcel:prod build:copydist build:zip",
+        "prebuild": "run-s clean",
+        "clean": "rimraf dist",
+        "manifest:mirrorversion": "node build-scripts/mirror-manifest-version.js",
+        "manifest:seticon": "node build-scripts/set-manifest-icon.js",
+        "build:copydist": "node build-scripts/copy-build-dist.js",
+        "build:parcel:dev": "parcel watch src/manifest.json --target webext-dev --host localhost --no-cache",
+        "build:parcel:prod": "parcel build src/manifest.json --target webext-prod",
+        "format": "run-p format:*",
+        "format:prettier": "prettier -w src/",
+        "format:lint": "eslint --ext .js,.jsx,.ts,.tsx --fix src/",
+        "prepare": "husky install",
+        "test": "exit 0",
+        "check:deps": "npx depcheck",
+        "clean:deps": "rimraf node_modules/ .parcel-cache/ && yarn && yarn build",
+        "watch:clean:deps": "nodemon --exec \"yarn clean:deps\" --watch ./package.json",
+        "preversion": "git pull",
+        "postversion": "git push && git push --tags",
+        "check:env-vars": "node build-scripts/check-required-environment-variables.js",
+        "build:fix-manifest-v3": "node build-scripts/fix-manifest-v3.js",
+        "build:zip": "build-scripts/zip-dist.js"
+    },
+    "targets": {
+        "webext-dev": {
+            "sourceMap": {
+                "inline": true,
+                "inlineSources": true
+            }
+        },
+        "webext-prod": {}
+    },
+    "browserslist": [
+        "last 2 chrome version"
+    ],
+    "dependencies": {
+        "@parcel/config-webextension": "^2.0.0-nightly.2312",
+        "@stripe/stripe-js": "^1.16.0",
+        "analytics-node": "^4.0.1",
+        "dotenv": "^10.0.0",
+        "firebase": "^8.7.0",
+        "firebaseui": "^4.8.0",
+        "flat": "^5.0.0",
+        "humanparser": "^2.6.0",
+        "papaparse": "^5.2.0",
+        "parcel": "^2.0.0-nightly.688",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "sweetalert2": "^11.0.18",
+        "zip-a-folder": "^1.1.0"
+    },
+    "devDependencies": {
+        "@parcel/transformer-image": "2.0.0-nightly.2391",
+        "@types/analytics-node": "^3.1.5",
+        "@types/chrome": "0.0.146",
+        "@types/flat": "^5.0.2",
+        "@types/humanparser": "^1.1.1",
+        "@types/node": "^16.3.1",
+        "@types/papaparse": "^5.0.3",
+        "@types/parcel-env": "^0.0.1",
+        "@types/react": "^17.0.8",
+        "@types/react-dom": "^17.0.5",
+        "@typescript-eslint/eslint-plugin": "^4.4.1",
+        "cross-env": "^7.0.3",
+        "eslint": "^7.30.0",
+        "eslint-config-airbnb-typescript": "^12.3.1",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-jsx-a11y": "^6.3.1",
+        "eslint-plugin-prettier": "^3.4.0",
+        "eslint-plugin-react": "^7.20.3",
+        "eslint-plugin-react-hooks": "^4.0.8",
+        "fs-extra": "^10.0.0",
+        "husky": "^7.0.1",
+        "nodemon": "^2.0.12",
+        "npm-run-all": "^4.1.5",
+        "prettier": "^2.3.2",
+        "rimraf": "^3.0.2",
+        "ts-loader": "^9.2.3",
+        "typescript": "^4.3.5"
+    },
+    "manifest": {
+        "manifest_version": 2,
+        "name": "LinkedIn Sales Navigator Scraper",
+        "description": "This tool allows you to download all visible LinkedIn Sales Navigator profile data easily, and conveniently.",
+        "options_ui": {
+            "page": "core/options/options.html",
+            "open_in_tab": true
+        },
+        "icons": {},
+        "browser_action": {
+            "default_icon": "",
+            "default_popup": "core/popup/popup.html"
+        },
+        "content_scripts": [
+            {
+                "matches": [
+                    "https://*.linkedin.com/*",
+                    "https://linkedinsalesnavigatorscraper.com/"
+                ],
+                "js": [
+                    "core/content_script/content_script.ts"
+                ],
+                "css": [
+                    "assets/css/dom.css",
+                    "assets/css/dom-swal.css",
+                    "assets/css/dom-database.css"
+                ]
+            }
+        ],
+        "background": {
+            "scripts": [
+                "core/background/background.ts"
+            ]
+        },
+        "permissions": [
+            "storage",
+            "unlimitedStorage",
+            "tabs"
+        ],
+        "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://apis.google.com https://*.stripe.com; object-src 'self'"
+    }
+}

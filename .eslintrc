@@ -1,0 +1,23 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/explicit-module-boundary-types": 1,
+    "@typescript-eslint/no-explicit-any": 1
+  }
+}

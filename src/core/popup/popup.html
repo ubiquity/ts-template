@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>LinkedIn Sales Navigator Scraper Popup</title>
+    <link rel="stylesheet" href="../../assets/css/popup.css" />
+    <link rel="stylesheet" href="../../assets/css/popup-dark.css" />
+    <link rel="stylesheet" href="../../assets/css/popup-light.css" />
+  </head>
+
+  <body>
+    <div id="loading">
+      <img src="../../assets/icons/icon128-dev.png" />
+    </div>
+    <table>
+      <tbody>
+        <tr>
+          <td>
+            <div id="firebaseui-auth-container">
+              <header>
+                <div id="logo">
+                  <img width="48px" src="../../assets/icons/icon128-prod.png" />
+                </div>
+                <div id="signin">Orion Black | Sign In</div>
+              </header>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td id="startEngine_wrapper">
+            <button id="startEngine" data-t="Start scraping request"
+              >Start</button
+            >
+          </td>
+        </tr>
+
+        <tr>
+          <td id="dbHistory_wrapper">
+            <button id="dbHistory" data-t="Open scraping menu"
+              >Prospects</button
+            >
+          </td>
+        </tr>
+        <tr>
+          <td id="upgrade_wrapper">
+            <button id="upgrade" data-t="Upgrade subscription">Upgrade</button>
+          </td>
+        </tr>
+        <tr>
+          <td id="dashboard_wrapper">
+            <button id="dashboard" data-t="Open user dashboard">Account</button>
+          </td>
+        </tr>
+        <tr>
+          <td id="help_wrapper">
+            <button id="help" data-t="Help">Help</button>
+          </td>
+        </tr>
+        <tr>
+          <td id="signout_wrapper">
+            <button id="signOut" data-t="Sign out">Sign Out</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <footer>
+      <a href="https://www.linkedin.com/sales/search/people">
+        <button id="redirectToSalesNavigator" data-t="Open Sales Navigator"
+          >Go to LinkedIn</button
+        >
+      </a>
+      <a id="dashboard_wrapper_not_on_linkedin">
+        <button id="dashboardNotOnLinkedIn" data-t="Open user dashboard"
+          >My Account</button
+        >
+      </a>
+    </footer>
+    <script type="module" src="./popup.ts"></script>
+  </body>
+</html>

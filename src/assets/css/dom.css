@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+iframe.scraper {
+  position: fixed;
+  margin: 8px;
+  height: 25vh;
+  box-shadow: 8px 8px 48px 0 #000000;
+  bottom: 0;
+  top: auto;
+  right: 0;
+  width: 25vw;
+  transition: 0.125s all cubic-bezier(0, 1, 1, 1);
+  border-radius: 4px;
+  background: #fff;
+  opacity: 1;
+}
+
+iframe.scraper:hover {
+  height: calc(100vh - 169px);
+  z-index: 1;
+}
+
+iframe.scraper:first-of-type::before,
+iframe.scraper:last-of-type::after {
+  content: "";
+  display: block;
+  width: 100vw;
+  height: 3px;
+  background: #000;
+}
+
+@keyframes expansion {
+  from {
+    height: 0px;
+    padding: 0px;
+  }
+  to {
+    height: calc(121px);
+    padding: 24px 8px;
+  }
+}
+
+ol.search-results__result-list {
+  overflow: hidden;
+}
+.search-results__result-item {
+  overflow: hidden;
+  animation: 2s cubic-bezier(0, 1, 1, 1) 0s 1 normal none running expansion !important;
+}
+
+.ob-swal2-input-number {
+  max-width: none !important;
+  width: 50% !important;
+  margin: 14px auto 0px !important;
+}
+.ob-swal2-input-text {
+  width: auto !important;
+}
