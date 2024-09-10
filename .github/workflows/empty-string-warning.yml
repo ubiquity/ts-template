@@ -1,0 +1,67 @@
+name: Warn for Empty Strings
+
+on:
+  pull_request:
+    paths:
+      - "**/*.ts"
+      - "**/*.tsx"
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  check-empty-strings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find empty strings in TypeScript files
+        id: find_empty_strings
+        run: |
+          # Find empty strings and mark them explicitly
+          output=$(grep -Pnr --include=\*.ts "(?<!\\w)(''|\"\")" --exclude-dir={node_modules,dist,out,tests} . || true)
+
+          if [ -z "$output" ]; then
+            echo "results=No empty strings found." >> $GITHUB_OUTPUT
+            exit 0
+          else
+            output=$(echo "$output" | sed 's/""/"[EMPTY STRING]"/g' | sed "s/''/'[EMPTY STRING]'/g")
+            echo "results=${output//$'\n'/%0A}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: findings
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        run: |
+          if [ "${{ steps.find_empty_strings.outputs.results }}" == "No empty strings found." ]; then
+            echo "No empty strings found. No action required."
+          else
+            echo "::warning::Empty strings found in the following files:"
+            echo "${{ steps.find_empty_strings.outputs.results }}"
+          fi
+
+      - name: Post review comments for findings
+        if: steps.find_empty_strings.outputs.results != 'No empty strings found.'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const findings = `${{ steps.find_empty_strings.outputs.results }}`.split('%0A');
+            for (const finding of findings) {
+              const [path, line] = finding.split(':');
+              const body = "Empty string detected!"; 
+              const prNumber = context.payload.pull_request.number;
+              const owner = context.repo.owner;
+              const repo = context.repo.repo;
+
+              await github.rest.pulls.createReviewComment({
+                owner,
+                repo,
+                pull_number: prNumber,
+                body,
+                commit_id: context.payload.pull_request.head.sha,
+                path,
+                line: parseInt(line, 10),
+              });
+            }
