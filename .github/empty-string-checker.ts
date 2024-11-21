@@ -36,36 +36,10 @@ async function main() {
     if (violations.length > 0) {
       violations.forEach(({ file, line, content }) => {
         core.warning(
-          "Detected an empty string.\n\nIf this is during variable initialization, consider using a different approach.\nFor more information, visit: https://www.github.com/ubiquity/ts-template/issues/31",
-          {
-            file,
-            startLine: line,
-          }
-        );
+          `Detected an empty string.\nFile: ${file}.\nLine: ${line}.\n\nIf this is during variable initialization, consider using a different approach.\nFor more information, visit: https://www.github.com/ubiquity/ts-template/issues/31`);
       });
 
-      // core.setFailed(`${violations.length} empty string${violations.length > 1 ? "s" : ""} detected in the code.`);
-
-      await octokit.rest.checks.create({
-        owner,
-        repo,
-        name: "Empty String Check",
-        head_sha: headSha,
-        status: "completed",
-        conclusion: violations.length > 0 ? "failure" : "success",
-        output: {
-          title: "Empty String Check Results",
-          summary: `Found ${violations.length} violation${violations.length !== 1 ? "s" : ""}`,
-          annotations: violations.map((v) => ({
-            path: v.file,
-            start_line: v.line,
-            end_line: v.line,
-            annotation_level: "warning",
-            message: "Empty string found",
-            raw_details: v.content,
-          })),
-        },
-      });
+      core.setFailed(`${violations.length} empty string${violations.length > 1 ? "s" : ""} detected in the code.`);
     } else {
       core.info("No empty strings found.");
     }
