@@ -1,14 +1,15 @@
 import esbuild, { BuildOptions } from "esbuild";
 
-const typescriptEntries = ["src/main.ts"];
-const cssEntries = ["static/style.css"];
-const entries = [...typescriptEntries, ...cssEntries];
+const ENTRY_POINTS = {
+  typescript: ["static/main.ts"],
+  // css: ["static/style.css"],
+};
 
 const DATA_URL_LOADERS = [".png", ".woff", ".woff2", ".eot", ".ttf", ".svg"];
 
 export const esbuildOptions: BuildOptions = {
   sourcemap: true,
-  entryPoints: entries,
+  entryPoints: [...ENTRY_POINTS.typescript /* ...ENTRY_POINTS.css */],
   bundle: true,
   minify: false,
   loader: Object.fromEntries(DATA_URL_LOADERS.map((ext) => [ext, "dataurl"])),
