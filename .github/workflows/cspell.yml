@@ -5,21 +5,4 @@ on:
 
 jobs:
   spellcheck:
-    name: Check for spelling errors
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Set up bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Set up bun
-        uses: oven-sh/setup-bun@v2
-
-      - name: Install cspell
-        run: bun add cspell
-
-      - name: Run cspell
-        run: bun run format:cspell
+    uses: ariesgun/.github/.github/workflows/cspell.yml@main
