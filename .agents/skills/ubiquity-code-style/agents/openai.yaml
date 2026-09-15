@@ -1,0 +1,3 @@
+interface:
+  display_name: "Ubiquity Code Style"
+  short_description: "Apply Ubiquity TypeScript and Deno code style"
