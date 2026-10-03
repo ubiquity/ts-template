@@ -187,9 +187,10 @@ Mechanics that matter:
 - TSX/JSX when present: the snapshot has no `files` key and its naming glob covers
   `.js`/`.ts` only. Add the target's real `**/*.tsx` (and `**/*.jsx`) files to the
   ESLint files/ignore globs, to `check-file/filename-naming-convention`, to the
-  type-aware lint program's `include` with a JSX compiler option such as
-  `"jsx": "react-jsx"`, to formatter ownership and its ignore files, and to Knip
-  `project`/entry scopes. Do not ignore owned source to make checks pass.
+  type-aware lint program's `include` with `"allowJs": true` when covering JSX and
+  a JSX compiler option such as `"jsx": "react-jsx"`, to formatter ownership and
+  its ignore files, and to Knip `project`/entry scopes. Do not ignore owned source
+  to make checks pass.
 
 Coverage by category, so nothing is missed when recreating the ruleset:
 

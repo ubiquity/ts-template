@@ -143,13 +143,15 @@ options from interfering with the lint program's types.
 ```
 
 Adjust `include` to the target's real source, test, script, ops, and benchmark
-directories. When the target has `.tsx`/`.jsx`, add those extensions to `include`
-and set a JSX compiler option matching the runtime (for example
-`"jsx": "react-jsx"`); the TS/MJS example above does not cover those extensions
-automatically. The simple profile keeps the same compiler options without the
-`typeRoots`/`types` entries and includes only its own source path plus
-`.deno-types.d.ts`; add the Node type entries only when the lint program actually
-uses Node APIs.
+directories. When the target has `.tsx`/`.jsx`, add those extensions to `include`,
+enable `"allowJs": true` in `compilerOptions` when covering `.jsx` (TypeScript
+excludes `.jsx` without JavaScript support, which causes ESLint's project parser
+to report that the files are not part of the lint program), and set a JSX compiler
+option matching the runtime (for example `"jsx": "react-jsx"`); the TS/MJS example
+above does not cover those extensions automatically. The simple profile keeps the
+same compiler options without the `typeRoots`/`types` entries and includes only its
+own source path plus `.deno-types.d.ts`; add the Node type entries only when the
+lint program actually uses Node APIs.
 
 When the config lives in `tools/lint/` but lints the repository root, set
 `tsconfigRootDir` explicitly in the ESLint config:
