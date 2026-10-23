@@ -143,9 +143,12 @@ options from interfering with the lint program's types.
 ```
 
 Adjust `include` to the target's real source, test, script, ops, and benchmark
-directories. When the target has `.tsx`/`.jsx`, add those extensions to `include`
-and set a JSX compiler option matching the runtime (for example
-`"jsx": "react-jsx"`); the TS/MJS example above does not cover those extensions
+directories. When the target has `.tsx`/`.jsx`, add those extensions to `include`,
+set a JSX compiler option matching the runtime (for example `"jsx": "react-jsx"`),
+and enable `"allowJs": true` (and optionally `"checkJs": true`) in `compilerOptions`
+when `.jsx` files are present; without `"allowJs": true`, TypeScript excludes `.jsx`
+files from the project and ESLint `parserOptions.project` reports that they are not
+part of the lint program. The TS/MJS example above does not cover those extensions
 automatically. The simple profile keeps the same compiler options without the
 `typeRoots`/`types` entries and includes only its own source path plus
 `.deno-types.d.ts`; add the Node type entries only when the lint program actually
