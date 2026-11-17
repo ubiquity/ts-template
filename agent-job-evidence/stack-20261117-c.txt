@@ -1,0 +1,69 @@
+{
+  "job_id": "stack-20261117-c",
+  "started_utc": "2026-11-17T08:53:59.916Z",
+  "runner": {
+    "GITHUB_RUN_ID": "44050436813",
+    "GITHUB_RUN_ATTEMPT": "1",
+    "AGENT_JOBS_CELL_ID": "c01",
+    "RUNNER_NAME": "GitHub Actions 1000021542",
+    "RUNNER_OS": "Linux",
+    "RUNNER_ARCH": "X64"
+  },
+  "hostname": "ip-10-0-133-209",
+  "uname": "Linux 7.0.0-1016-aws",
+  "codex_version": "codex-cli 0.169.0",
+  "processes_before": [
+    {
+      "pid": 2631,
+      "ppid": 2630,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-a/checkout"
+    },
+    {
+      "pid": 2743,
+      "ppid": 2742,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-b/checkout"
+    },
+    {
+      "pid": 3313,
+      "ppid": 3312,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-c/checkout"
+    },
+    {
+      "pid": 3641,
+      "ppid": 3640,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-d/checkout"
+    }
+  ],
+  "registry_http_status": 200,
+  "processes_after": [
+    {
+      "pid": 2631,
+      "ppid": 2630,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-a/checkout"
+    },
+    {
+      "pid": 2743,
+      "ppid": 2742,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-b/checkout"
+    },
+    {
+      "pid": 3313,
+      "ppid": 3312,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-c/checkout"
+    },
+    {
+      "pid": 3641,
+      "ppid": 3640,
+      "comm": "codex",
+      "cwd": "/home/runner/work/_temp/agent-jobs/stack-20261117-d/checkout"
+    }
+  ],
+  "finished_utc": "2026-11-17T08:54:45.085Z"
+}
